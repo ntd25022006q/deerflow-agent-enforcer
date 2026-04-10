@@ -27,4 +27,4 @@ coverage/
 .pytest_cache/
 .coverage
 coverage.json
-.github/workflows/
+# .github/workflows/ — tracked (needed for GitHub Actions)

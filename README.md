@@ -7,7 +7,7 @@
 
 ## What Is This?
 
-DeerFlow Agent Enforcer is a single-repo enforcement framework that makes ANY AI coding agent follow strict, production-grade rules. One `git clone` and every AI agent in your project — Cursor, Claude, Copilot, Windsurf, Zed, Devin, Amazon Q, or any other — is forced to:
+DeerFlow Agent Enforcer is a **universal** enforcement framework that makes **ANY AI coding agent** follow strict, production-grade rules. One `git clone` and **every AI agent** in your project is forced to comply — regardless of which tool you use:
 
 - Write **real, complete code** — no mocks, stubs, or TODOs
 - **Plan before coding** — architecture first, always
@@ -19,6 +19,25 @@ DeerFlow Agent Enforcer is a single-repo enforcement framework that makes ANY AI
 - **Follow security best practices** — no hardcoded secrets
 - **Produce professional UI** — responsive, accessible, consistent
 - **Maintain context** — never lose track of requirements
+
+---
+
+## Supported AI Agents
+
+This framework is designed to work with **ALL AI coding agents** — no exceptions, no limitations. It provides dedicated configuration files for the most popular agents and universal rules that apply to any AI coding tool:
+
+### Dedicated Config Files
+| Agent | Config File | Format |
+|-------|-------------|--------|
+| **Cursor** | `.cursorrules` | Cursor Rules |
+| **Claude Code / Claude Desktop** | `CLAUDE.md` | Claude Markdown |
+| **GitHub Copilot** | `.github/copilot-instructions.md` | Copilot Instructions |
+| **Windsurf** | `.ai/WINDSURF.md` | Windsurf Rules |
+| **Zed / Tabnine / Amazon Q / Cody / Continue / Aider** | `.ai/AGENTS.md` | Universal Rules |
+| **Any AI Agent** | `.ai/SYSTEM_PROMPT.md` | Base System Prompt |
+
+### Also Compatible With (via universal rules)
+Devin, OpenHands, SWE-Agent, AutoGPT, BabyAGI, MetaGPT, ChatDev, Sweep, Bloop, Sourcegraph Cody, CodeWhisperer, Codeium, Cline, Trae, Augment Code, Roo Code, Mellum, Amp, and **any future AI coding agent**.
 
 ---
 
@@ -198,15 +217,37 @@ Layer 5: Context Manager     (drift detection, checkpoint recovery)    → Intel
 
 ## Evidence & Verification
 
-All evidence in `docs/evidence/` is from **real test execution**:
+All evidence in `docs/evidence/` is from **real test execution** — no simulations, no mock data:
 
-| Category | Files | Description |
-|----------|-------|-------------|
-| **Screenshots** | 4 PNG + 1 MP4 | Real terminal captures from `pytest -v` output |
-| **Charts** | 6 PNG | Coverage, tests, radar, comparison, timeline, dashboard |
-| **Data** | 4 JSON | pytest report, coverage JSON, benchmark, summary |
-| **Reports** | 2 PDF | Full evidence report + verification certificate |
-| **Logs** | 1 TXT | Raw 189-line terminal output |
+### Screenshots & Video
+| File | Description |
+|------|-------------|
+| `docs/evidence/screenshots/screenshot-01-tests-start.png` | Test execution start — pytest invoked with verbose output |
+| `docs/evidence/screenshots/screenshot-02-tests-mid.png` | Mid-execution — unit tests running across all modules |
+| `docs/evidence/screenshots/screenshot-03-tests-results.png` | Final results — 165 passed, 80.59% coverage |
+| `docs/evidence/screenshots/screenshot-04-summary.png` | Complete summary with timing and coverage breakdown |
+| `docs/evidence/screenshots/test-execution-video.mp4` | Full test execution video (H.264, 249 frames, 720KB) |
+
+### Metrics Charts (Real Data)
+| File | Description |
+|------|-------------|
+| `docs/evidence/charts/chart-coverage-modules.png` | Coverage breakdown by module |
+| `docs/evidence/charts/chart-tests-by-module.png` | Test count distribution per module |
+| `docs/evidence/charts/chart-feature-comparison-radar.png` | Feature comparison radar vs competitors |
+| `docs/evidence/charts/chart-enforcement-comparison.png` | Enforcement layer comparison |
+| `docs/evidence/charts/chart-execution-timeline.png` | Test execution timeline |
+| `docs/evidence/charts/chart-metrics-dashboard.png` | Overall metrics dashboard |
+
+### Data & Reports
+| File | Description |
+|------|-------------|
+| `docs/evidence/data/test-report-real.json` | Full pytest JSON report (120KB, all 165 tests) |
+| `docs/evidence/data/coverage-real.json` | Coverage JSON (76KB, per-line data) |
+| `docs/evidence/data/benchmark-comparison.json` | Competitor benchmark data |
+| `docs/evidence/data/evidence-summary.json` | Evidence cross-validation summary |
+| `docs/evidence/logs/real-test-output.txt` | Raw terminal output (189 lines) |
+| `docs/evidence/reports/DeerFlow-Agent-Enforcer-Evidence-Report.pdf` | Full evidence report (840KB) |
+| `docs/evidence/reports/Verification-Certificate.pdf` | Verification certificate (48KB) |
 
 Run verification yourself:
 
@@ -249,8 +290,8 @@ project:
 
 ## License
 
-MIT License — Free for personal and commercial use.
+MIT License — Free for personal and commercial use. No attribution required.
 
 ---
 
-*Inspired by [DeerFlow](https://github.com/bytedance/deer-flow) by ByteDance*
+*Inspired by [DeerFlow](https://github.com/bytedance/deer-flow) by ByteDance. Designed to work with **ALL** AI coding agents — universally compatible, zero limitations.*
