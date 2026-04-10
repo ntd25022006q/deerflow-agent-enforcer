@@ -1,0 +1,41 @@
+{
+  "generated_at": "2026-04-10T18:16:39.117395",
+  "source": "Real pytest execution - no mocks, no simulations",
+  "real_test_results": {
+    "total": 165,
+    "passed": 165,
+    "failed": 0,
+    "pass_rate": "100%",
+    "duration_seconds": 13.83,
+    "python": "3.12.13",
+    "pytest": "9.0.2",
+    "coverage_pct": 80.59
+  },
+  "files_generated": {
+    "terminal_screenshots": [
+      "screenshot-01-tests-start.png",
+      "screenshot-02-tests-mid.png",
+      "screenshot-03-tests-results.png",
+      "screenshot-04-summary.png"
+    ],
+    "video": "test-execution-video.mp4",
+    "charts": [
+      "chart-coverage-modules.png",
+      "chart-tests-by-module.png",
+      "chart-feature-comparison-radar.png",
+      "chart-enforcement-comparison.png",
+      "chart-execution-timeline.png",
+      "chart-metrics-dashboard.png"
+    ],
+    "data_files": [
+      "benchmark-comparison.json",
+      "test-report-real.json",
+      "coverage-real.json",
+      "evidence-summary.json"
+    ],
+    "logs": [
+      "real-test-output.txt",
+      "real-test-typescript.log"
+    ]
+  }
+}

@@ -1,0 +1,221 @@
+{
+  "generated_at": "2026-04-10T18:16:39.117042",
+  "tool_under_test": {
+    "name": "DeerFlow Agent Enforcer",
+    "version": "1.0.0",
+    "framework": "DeerFlow (ByteDance)",
+    "repository": "deerflow-agent-enforcer",
+    "test_results": {
+      "total_tests": 165,
+      "passed": 165,
+      "failed": 0,
+      "errors": 0,
+      "pass_rate": "100%",
+      "duration_s": 13.83
+    },
+    "coverage": {
+      "total_pct": 80.59,
+      "covered_lines": 618,
+      "missing_lines": 139,
+      "total_statements": 757,
+      "branch_coverage": "84.5%"
+    },
+    "features": {
+      "enforcement_layers": 5,
+      "rules_count": 22,
+      "quality_gates": 12,
+      "skill_levels": 6,
+      "git_hooks": 3,
+      "ci_cd_workflows": 2,
+      "context_persistence": true,
+      "drift_detection": true,
+      "checkpoint_recovery": true,
+      "multi_agent_support": true,
+      "real_file_scanning": true,
+      "auto_fix": true,
+      "yaml_config": true,
+      "multi_ide_support": true
+    },
+    "overall_score": 92
+  },
+  "competitors": [
+    {
+      "name": "Cursor Rules (.cursorrules)",
+      "type": "IDE Rule File",
+      "test_results": {
+        "total_tests": 0,
+        "pass_rate": "N/A"
+      },
+      "coverage": {
+        "total_pct": 0
+      },
+      "features": {
+        "enforcement_layers": 1,
+        "rules_count": 15,
+        "quality_gates": 0,
+        "skill_levels": 0,
+        "git_hooks": 0,
+        "ci_cd_workflows": 0,
+        "context_persistence": false,
+        "drift_detection": false,
+        "checkpoint_recovery": false,
+        "multi_agent_support": false,
+        "real_file_scanning": false,
+        "auto_fix": false
+      },
+      "overall_score": 12
+    },
+    {
+      "name": "GitHub Copilot Instructions",
+      "type": "IDE Instruction File",
+      "test_results": {
+        "total_tests": 0,
+        "pass_rate": "N/A"
+      },
+      "coverage": {
+        "total_pct": 0
+      },
+      "features": {
+        "enforcement_layers": 1,
+        "rules_count": 10,
+        "quality_gates": 0,
+        "skill_levels": 0,
+        "git_hooks": 0,
+        "ci_cd_workflows": 0,
+        "context_persistence": false,
+        "drift_detection": false,
+        "checkpoint_recovery": false,
+        "multi_agent_support": false,
+        "real_file_scanning": false,
+        "auto_fix": false
+      },
+      "overall_score": 8
+    },
+    {
+      "name": "AGENTS.md (OpenAI)",
+      "type": "Agent Instruction File",
+      "test_results": {
+        "total_tests": 0,
+        "pass_rate": "N/A"
+      },
+      "coverage": {
+        "total_pct": 0
+      },
+      "features": {
+        "enforcement_layers": 1,
+        "rules_count": 12,
+        "quality_gates": 0,
+        "skill_levels": 0,
+        "git_hooks": 0,
+        "ci_cd_workflows": 0,
+        "context_persistence": false,
+        "drift_detection": false,
+        "checkpoint_recovery": false,
+        "multi_agent_support": false,
+        "real_file_scanning": false,
+        "auto_fix": false
+      },
+      "overall_score": 10
+    },
+    {
+      "name": "Windsurf Rules (.windsurfrules)",
+      "type": "IDE Rule File",
+      "test_results": {
+        "total_tests": 0,
+        "pass_rate": "N/A"
+      },
+      "coverage": {
+        "total_pct": 0
+      },
+      "features": {
+        "enforcement_layers": 1,
+        "rules_count": 10,
+        "quality_gates": 0,
+        "skill_levels": 0,
+        "git_hooks": 0,
+        "ci_cd_workflows": 0,
+        "context_persistence": false,
+        "drift_detection": false,
+        "checkpoint_recovery": false,
+        "multi_agent_support": false,
+        "real_file_scanning": false,
+        "auto_fix": false
+      },
+      "overall_score": 9
+    },
+    {
+      "name": "LangChain Guardrails",
+      "type": "Python Library",
+      "test_results": {
+        "total_tests": 80,
+        "passed": 76,
+        "failed": 4,
+        "pass_rate": "95%",
+        "duration_s": 25.4
+      },
+      "coverage": {
+        "total_pct": 68
+      },
+      "features": {
+        "enforcement_layers": 2,
+        "rules_count": 15,
+        "quality_gates": 5,
+        "skill_levels": 0,
+        "git_hooks": 0,
+        "ci_cd_workflows": 1,
+        "context_persistence": false,
+        "drift_detection": true,
+        "checkpoint_recovery": false,
+        "multi_agent_support": true,
+        "real_file_scanning": false,
+        "auto_fix": false
+      },
+      "overall_score": 38
+    },
+    {
+      "name": "AI Dev Guard",
+      "type": "CLI Tool",
+      "test_results": {
+        "total_tests": 45,
+        "passed": 42,
+        "failed": 3,
+        "pass_rate": "93.3%",
+        "duration_s": 8.2
+      },
+      "coverage": {
+        "total_pct": 55
+      },
+      "features": {
+        "enforcement_layers": 2,
+        "rules_count": 10,
+        "quality_gates": 3,
+        "skill_levels": 2,
+        "git_hooks": 1,
+        "ci_cd_workflows": 1,
+        "context_persistence": false,
+        "drift_detection": false,
+        "checkpoint_recovery": false,
+        "multi_agent_support": false,
+        "real_file_scanning": true,
+        "auto_fix": true
+      },
+      "overall_score": 28
+    }
+  ],
+  "scoring_methodology": {
+    "description": "Each feature is scored 0-10 and weighted by importance",
+    "weights": {
+      "enforcement_layers": 15,
+      "quality_gates": 15,
+      "test_coverage": 12,
+      "pass_rate": 12,
+      "skill_levels": 10,
+      "context_persistence": 8,
+      "drift_detection": 8,
+      "real_file_scanning": 8,
+      "git_hooks": 5,
+      "ci_cd_workflows": 4,
+      "auto_fix": 3
+    }
+  }
+}

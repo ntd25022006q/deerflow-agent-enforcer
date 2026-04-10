@@ -1,0 +1,39 @@
+name: coding
+version: "2.0.0"
+description: "Core coding skill: write production-ready, fully-implemented code"
+category: core
+rules:
+  - follow_project_conventions
+  - strict_typing
+  - no_prohibited_patterns
+  - comprehensive_error_handling
+  - complete_implementation
+  - no_infinite_loops
+  - proper_async_handling
+  - clean_code_principles
+required_tools:
+  - linter
+  - type_checker
+  - formatter
+required_knowledge:
+  - "Language best practices (TypeScript, Python, etc.)"
+  - "Design patterns (Factory, Observer, Strategy, etc.)"
+  - "SOLID principles"
+  - "Error handling patterns"
+  - "Testing patterns (AAA, given/when/then)"
+constraints:
+  - "NO mock data in production code"
+  - "NO TODO comments — implement now or flag explicitly"
+  - "NO any type without SAFETY: justification comment"
+  - "Functions must be < 50 lines"
+  - "Cyclomatic complexity < 10"
+  - "Every async operation must have a timeout"
+  - "Every loop must have a guaranteed exit condition"
+validation_checks:
+  - all_functions_implemented
+  - no_prohibited_patterns
+  - type_safety_verified
+  - error_handling_complete
+  - no_infinite_loops
+priority: 1
+enabled: true

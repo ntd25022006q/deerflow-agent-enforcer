@@ -1,0 +1,263 @@
+# ============================================================
+# DEERFLOW AGENT ENFORCER — MAIN CONFIGURATION
+# Version: 2.0.0
+# ============================================================
+
+version: "2.0.0"
+name: "DeerFlow Agent Enforcer"
+description: "Strict AI Agent enforcement framework based on DeerFlow (ByteDance) Agentic Workflow"
+
+# === PROJECT SETTINGS ===
+project:
+  min_build_size_kb: 100          # Minimum build output size (KB) — suspicious if below
+  max_function_lines: 50          # Max lines per function
+  max_complexity: 10              # Max cyclomatic complexity per function
+  test_coverage_minimum: 80       # Minimum test coverage percentage
+  max_bundle_size_mb: 5           # Maximum JS bundle size
+  timeout_async_ms: 30000         # Default async operation timeout
+  retry_attempts: 3               # Default retry count for transient failures
+
+# === QUALITY GATES ===
+quality_gates:
+  pre_commit:
+    - lint
+    - type_check
+    - unit_tests
+    - no_console_log
+    - no_hardcoded_secrets
+    - build_size_check
+
+  pre_push:
+    - integration_tests
+    - security_audit
+    - dependency_check
+    - bundle_analysis
+    - accessibility_check
+
+  continuous:
+    - e2e_tests
+    - performance_benchmarks
+    - visual_regression
+    - cross_browser_check
+
+# === ENFORCEMENT LEVELS ===
+enforcement:
+  level: "strict"                  # strict | moderate | relaxed
+  auto_fix: true                   # Auto-fix linting issues
+  block_on_violation: true         # Block commits on violations
+  require_test_pass: true          # Block if tests fail
+  require_build_pass: true         # Block if build fails
+  require_security_pass: true      # Block on security issues
+
+# === RULE SEVERITY ===
+rules:
+  file_safety:
+    severity: "critical"
+    message: "File deletion requires explicit confirmation"
+    action: "block"
+
+  no_mocks:
+    severity: "critical"
+    message: "No mock/placeholder code in production"
+    action: "block"
+
+  architecture_first:
+    severity: "high"
+    message: "Plan architecture before coding"
+    action: "warn"
+
+  surgical_changes:
+    severity: "high"
+    message: "Make minimal, targeted changes"
+    action: "warn"
+
+  dependency_safety:
+    severity: "critical"
+    message: "Check dependency compatibility"
+    action: "block"
+
+  loop_safety:
+    severity: "critical"
+    message: "All loops must have exit conditions"
+    action: "block"
+
+  evidence_based:
+    severity: "high"
+    message: "Verify APIs against documentation"
+    action: "warn"
+
+  build_integrity:
+    severity: "critical"
+    message: "Build must include all assets"
+    action: "block"
+
+  security_first:
+    severity: "critical"
+    message: "Security vulnerabilities must be fixed"
+    action: "block"
+
+  testing_mandatory:
+    severity: "high"
+    message: "Tests required for all new code"
+    action: "block"
+
+  context_retention:
+    severity: "medium"
+    message: "Maintain project context"
+    action: "info"
+
+  performance:
+    severity: "medium"
+    message: "Follow performance best practices"
+    action: "warn"
+
+  error_handling:
+    severity: "high"
+    message: "Comprehensive error handling required"
+    action: "warn"
+
+  professional_ui:
+    severity: "medium"
+    message: "UI must be responsive and accessible"
+    action: "warn"
+
+  no_shortcuts:
+    severity: "high"
+    message: "No shortcuts allowed"
+    action: "block"
+
+# === SKILL REGISTRY ===
+skills:
+  enabled:
+    - coding
+    - testing
+    - security
+    - architecture
+    - documentation
+    - deployment
+
+  coding:
+    rules:
+      - follow_project_conventions
+      - strict_typing
+      - no_prohibited_patterns
+      - comprehensive_error_handling
+
+  testing:
+    rules:
+      - unit_tests_for_functions
+      - integration_tests_for_apis
+      - e2e_tests_for_critical_paths
+      - edge_case_coverage
+
+  security:
+    rules:
+      - no_hardcoded_secrets
+      - input_validation
+      - xss_prevention
+      - csrf_protection
+      - dependency_audit
+
+  architecture:
+    rules:
+      - plan_before_code
+      - component_hierarchy
+      - state_management
+      - file_structure
+
+  documentation:
+    rules:
+      - inline_comments_for_complexity
+      - jsdoc_for_public_apis
+      - adr_for_decisions
+      - readme_updated
+
+  deployment:
+    rules:
+      - build_verification
+      - env_vars_only_for_secrets
+      - ci_cd_pipeline_passes
+      - monitoring_ready
+
+# === WORKFLOW PIPELINE ===
+workflow:
+  stages:
+    - name: "analyze"
+      description: "Deep analysis of requirements"
+      gates: []
+      timeout_ms: 60000
+
+    - name: "plan"
+      description: "Architecture design and planning"
+      gates: []
+      timeout_ms: 60000
+
+    - name: "implement"
+      description: "Incremental code implementation"
+      gates: ["lint", "type_check"]
+      timeout_ms: 300000
+
+    - name: "test"
+      description: "Unit and integration testing"
+      gates: ["unit_tests", "coverage_check"]
+      timeout_ms: 120000
+
+    - name: "verify"
+      description: "Build and security verification"
+      gates: ["build", "security_audit", "bundle_size"]
+      timeout_ms: 120000
+
+    - name: "validate"
+      description: "E2E validation and accessibility"
+      gates: ["e2e_tests", "a11y_check", "responsive_check"]
+      timeout_ms: 180000
+
+    - name: "complete"
+      description: "Final quality gate check"
+      gates: ["all_quality_gates"]
+      timeout_ms: 60000
+
+# === AGENT SETTINGS ===
+agents:
+  cursor:
+    config_file: ".cursorrules"
+    enabled: true
+
+  claude:
+    config_file: "CLAUDE.md"
+    enabled: true
+
+  copilot:
+    config_file: ".github/copilot-instructions.md"
+    enabled: true
+
+  windsurf:
+    config_file: ".ai/WINDSURF.md"
+    enabled: true
+
+  generic:
+    config_file: ".ai/AGENTS.md"
+    enabled: true
+
+  system:
+    config_file: ".ai/SYSTEM_PROMPT.md"
+    enabled: true
+
+# === SECURITY CONFIGURATION ===
+security:
+  scan_on_commit: true
+  scan_on_push: true
+  blocked_patterns:
+    - "password"
+    - "secret"
+    - "api_key"
+    - "token"
+    - "private_key"
+  allowed_env_vars:
+    - "NODE_ENV"
+    - "PORT"
+    - "HOST"
+  env_file_patterns:
+    - ".env"
+    - ".env.local"
+    - ".env.production"

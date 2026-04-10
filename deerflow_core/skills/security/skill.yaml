@@ -1,0 +1,41 @@
+name: security
+version: "2.0.0"
+description: "Security skill: implement secure coding practices following OWASP"
+category: safety
+rules:
+  - no_hardcoded_secrets
+  - input_validation_required
+  - xss_prevention
+  - csrf_protection
+  - sql_injection_prevention
+  - dependency_audit
+  - secure_headers
+  - authentication_best_practices
+required_tools:
+  - security_scanner
+  - dependency_checker
+  - secret_detector
+required_knowledge:
+  - "OWASP Top 10"
+  - "CWE/SANS Top 25"
+  - "Security headers (CSP, CORS, HSTS, X-Frame-Options)"
+  - "Authentication patterns (JWT, OAuth2, SAML)"
+  - "Encryption fundamentals (AES, RSA, TLS)"
+  - "Rate limiting and DDoS prevention"
+constraints:
+  - "ALL secrets in environment variables — NEVER in code"
+  - "Parameterized queries ONLY — NEVER string concatenation for SQL"
+  - "Sanitize ALL user-provided content before rendering"
+  - "NO eval(), NO new Function(), NO innerHTML with user data"
+  - "CORS configured properly — never wildcard in production"
+  - "JWT expiration must be set"
+  - "Passwords hashed with bcrypt/argon2 — NEVER plain text"
+  - "Rate limiting on all auth endpoints"
+validation_checks:
+  - no_secrets_in_code
+  - input_validation_present
+  - security_headers_configured
+  - dependency_audit_clean
+  - auth_properly_implemented
+priority: 1
+enabled: true

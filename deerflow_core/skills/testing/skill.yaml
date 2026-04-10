@@ -1,0 +1,38 @@
+name: testing
+version: "2.0.0"
+description: "Testing skill: write comprehensive tests for all code"
+category: quality
+rules:
+  - unit_tests_for_all_functions
+  - integration_tests_for_apis
+  - e2e_tests_for_critical_paths
+  - edge_case_coverage
+  - no_skipped_tests
+  - meaningful_assertions
+  - test_isolation
+required_tools:
+  - test_runner
+  - coverage_tool
+  - mocking_framework
+required_knowledge:
+  - "Testing frameworks (Jest, Vitest, Pytest)"
+  - "Testing patterns (AAA, given/when/then)"
+  - "Mocking and stubbing techniques"
+  - "Test organization principles"
+  - "Coverage analysis"
+  - "Property-based testing"
+constraints:
+  - "Every new function MUST have at least 1 test"
+  - "Every component MUST have a render/snapshot test"
+  - "Every API endpoint MUST have an integration test"
+  - "Edge cases: null, undefined, empty, large input, concurrent access"
+  - "Test names MUST describe expected behavior"
+  - "Tests MUST be independent (no shared mutable state)"
+validation_checks:
+  - coverage_threshold_met
+  - all_tests_passing
+  - no_skipped_tests
+  - edge_cases_covered
+  - tests_independent
+priority: 2
+enabled: true

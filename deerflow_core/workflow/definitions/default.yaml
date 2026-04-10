@@ -1,0 +1,119 @@
+# DeerFlow Agent Enforcer — Workflow Definitions
+# Defines the 7-stage enforcement pipeline
+
+version: "2.0.0"
+
+pipelines:
+  - name: "full_enforcement"
+    description: "Complete enforcement pipeline for production tasks"
+    stages:
+      - id: "analyze"
+        name: "Deep Analysis"
+        description: "Parse requirements, classify task type, identify risks"
+        timeout_seconds: 60
+        required_inputs:
+          - "task_description"
+        outputs:
+          - "task_type"
+          - "requirements"
+          - "risks"
+          - "dependencies"
+        quality_gates: []
+
+      - id: "plan"
+        name: "Architecture Planning"
+        description: "Design solution, plan file structure, define data flow"
+        timeout_seconds: 60
+        required_inputs:
+          - "task_type"
+          - "requirements"
+        outputs:
+          - "architecture"
+          - "file_plan"
+          - "data_flow"
+        quality_gates: []
+
+      - id: "implement"
+        name: "Incremental Implementation"
+        description: "Write code incrementally with validation at each step"
+        timeout_seconds: 300
+        required_inputs:
+          - "architecture"
+          - "file_plan"
+        outputs:
+          - "source_files"
+          - "config_files"
+        quality_gates:
+          - "lint"
+          - "type_check"
+        on_failure: "rollback_and_fix"
+
+      - id: "test"
+        name: "Testing"
+        description: "Write and run unit and integration tests"
+        timeout_seconds: 120
+        required_inputs:
+          - "source_files"
+        outputs:
+          - "test_files"
+          - "coverage_report"
+        quality_gates:
+          - "unit_tests"
+          - "coverage_check"
+        on_failure: "fix_and_rerun"
+
+      - id: "verify"
+        name: "Build & Security Verification"
+        description: "Build project and run security audit"
+        timeout_seconds: 120
+        required_inputs:
+          - "source_files"
+          - "test_files"
+        outputs:
+          - "build_artifacts"
+          - "security_report"
+        quality_gates:
+          - "build"
+          - "security_audit"
+          - "bundle_size"
+        on_failure: "block_and_report"
+
+      - id: "validate"
+        name: "E2E Validation"
+        description: "End-to-end testing, accessibility, responsive checks"
+        timeout_seconds: 180
+        required_inputs:
+          - "build_artifacts"
+        outputs:
+          - "e2e_report"
+          - "a11y_report"
+        quality_gates:
+          - "e2e_tests"
+          - "accessibility"
+          - "responsive_check"
+        on_failure: "block_and_report"
+
+      - id: "complete"
+        name: "Final Quality Gate"
+        description: "Final comprehensive quality check"
+        timeout_seconds: 60
+        required_inputs:
+          - "all_previous_outputs"
+        outputs:
+          - "quality_report"
+        quality_gates:
+          - "all_quality_gates"
+        on_failure: "block_and_report"
+
+  - name: "quick_check"
+    description: "Fast quality check for minor changes"
+    stages:
+      - id: "lint"
+        name: "Lint Check"
+        quality_gates: ["lint", "type_check"]
+      - id: "test"
+        name: "Quick Test"
+        quality_gates: ["unit_tests"]
+      - id: "verify"
+        name: "Quick Verify"
+        quality_gates: ["build", "no_console_log"]
