@@ -1,0 +1,137 @@
+name: DeerFlow Quality Gate
+
+on:
+  push:
+    branches: [main, develop]
+  pull_request:
+    branches: [main, develop]
+
+jobs:
+  quality-gate:
+    runs-on: ubuntu-latest
+    name: DeerFlow Enforcement Pipeline
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Install DeerFlow Engine
+        run: |
+          pip install pyyaml
+          echo "DeerFlow Engine ready"
+
+      # === Gate 1: Secret Detection ===
+      - name: Gate 1 — Secret Detection
+        run: |
+          echo "Running DeerFlow secret detection..."
+          SECRETS=0
+          if grep -rEI '(password|secret|api_key|private_key|token)\s*[:=]\s*["\x27]' \
+            --include='*.ts' --include='*.tsx' --include='*.js' --include='*.jsx' \
+            --include='*.py' --exclude-dir=node_modules --exclude-dir=.next --exclude-dir=dist \
+            --exclude-dir=__tests__ --exclude-dir=.deerflow . 2>/dev/null; then
+            echo "::error::Hardcoded secrets detected! This is a CRITICAL violation."
+            SECRETS=1
+          fi
+          if grep -rEI '(password|secret|api_key|private_key|token)\s*[:=]\s*["\x27]' \
+            --include='*.ts' --include='*.tsx' --include='*.js' --include='*.jsx' \
+            --include='*.py' . 2>/dev/null | grep -v 'process.env\|import.meta\|os.environ\|__tests__'; then
+            echo "::error::Hardcoded secrets NOT using env vars!"
+            SECRETS=1
+          fi
+          exit $SECRETS
+
+      # === Gate 2: Prohibited Patterns ===
+      - name: Gate 2 — Prohibited Pattern Detection
+        run: |
+          echo "Running DeerFlow prohibited pattern detection..."
+          python3 -c "
+          import re, os, sys
+          patterns = [
+              (r'eval\s*\(', 'eval() detected'),
+              (r'dangerouslySetInnerHTML', 'dangerouslySetInnerHTML without sanitization'),
+          ]
+          violations = 0
+          for root, dirs, files in os.walk('.'):
+              dirs[:] = [d for d in dirs if d not in ['node_modules', '.next', 'dist', 'build', '.git', '.deerflow', '__tests__']]
+              for f in files:
+                  if f.endswith(('.ts', '.tsx', '.js', '.jsx', '.py')):
+                      path = os.path.join(root, f)
+                      try:
+                          content = open(path).read()
+                          for pat, msg in patterns:
+                              if re.search(pat, content):
+                                  print(f'VIOLATION: {msg} in {path}')
+                                  violations += 1
+                      except: pass
+          sys.exit(1 if violations > 0 else 0)
+          "
+
+      # === Gate 3: Console.log Detection ===
+      - name: Gate 3 — Console.log Detection
+        run: |
+          echo "Checking for console.log in production code..."
+          FOUND=0
+          if grep -r 'console.log\|console.debug\|console.info' \
+            --include='*.ts' --include='*.tsx' --include='*.js' --include='*.jsx' \
+            --exclude-dir=node_modules --exclude-dir=.next --exclude-dir=dist \
+            --exclude-dir=__tests__ --exclude-dir=.deerflow . 2>/dev/null | \
+            grep -v 'DEERFLOW:ALLOW\|SAFETY:'; then
+            echo "::warning::console.log statements found in production code"
+            FOUND=1
+          fi
+          # Warning only, not blocking
+          echo "Console.log check complete (warnings: $FOUND)"
+
+      # === Gate 4: Build Size Verification ===
+      - name: Gate 4 — Build Size Check
+        run: |
+          echo "Checking build output size..."
+          for dir in dist build .next out; do
+            if [ -d "$dir" ]; then
+              SIZE=$(du -sk "$dir" | cut -f1)
+              echo "Build directory: $dir (${SIZE}KB)"
+              if [ "$SIZE" -lt 10 ]; then
+                echo "::error::Build output suspiciously small (${SIZE}KB) — assets may be missing"
+                exit 1
+              fi
+              break
+            fi
+          done
+          echo "Build size check passed"
+
+      # === Gate 5: TODO/Incomplete Code ===
+      - name: Gate 5 — Incomplete Code Detection
+        run: |
+          echo "Checking for incomplete code markers..."
+          FOUND=0
+          for file in $(find . -name '*.ts' -o -name '*.tsx' -o -name '*.js' -o -name '*.jsx' -o -name '*.py' \
+            | grep -v node_modules | grep -v .next | grep -v dist | grep -v __tests__ | grep -v .deerflow); do
+            if grep -E 'TODO:|FIXME:|HACK:|implement later|stub this|placeholder' "$file" 2>/dev/null | \
+              grep -v 'DEERFLOW:ALLOW' > /dev/null 2>&1; then
+              echo "::warning::Incomplete code marker in $file"
+              FOUND=1
+            fi
+          done
+          if [ "$FOUND" -gt 0 ]; then
+            echo "::warning::Found $FOUND files with incomplete code markers"
+          fi
+          echo "Incomplete code check complete"
+
+      # === Report ===
+      - name: DeerFlow Report
+        if: always()
+        run: |
+          echo "════════════════════════════════════════════"
+          echo "  DEERFLOW AGENT ENFORCER — CI Report"
+          echo "  Version: 2.0.0 | Level: strict"
+          echo "════════════════════════════════════════════"
+          echo "All quality gates evaluated."
+          echo "Violations block merge to protected branches."
