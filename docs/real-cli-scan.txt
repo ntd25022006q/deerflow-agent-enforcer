@@ -1,6 +1,0 @@
-2026-04-10 17:50:58 [DEERFLOW] INFO: DeerFlow Engine v2.0.0 initialized
-2026-04-10 17:50:58 [DEERFLOW] INFO: Project root: /home/z/my-project/download/deerflow-agent-enforcer
-2026-04-10 17:50:58 [DEERFLOW] INFO: Enforcement level: strict
-2026-04-10 17:50:58 [DEERFLOW] INFO: Scan complete: 0 violations found
-
-Found 0 violations:

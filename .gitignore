@@ -27,5 +27,3 @@ coverage/
 .pytest_cache/
 .coverage
 coverage.json
-docs/frames_tmp/
-docs/generate_real_evidence.py
